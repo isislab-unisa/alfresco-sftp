@@ -17,7 +17,6 @@ const dayjs = require('dayjs');
 const dayjsAdvancedFormat = require('dayjs/plugin/advancedFormat');
 dayjs.extend(dayjsAdvancedFormat);
 const utils = require('web-resources');
-const Electron = require('electron');
 const config = require('./config.json');
 
 /** Generates a SHA-256 hash for a given object. */
@@ -1423,35 +1422,8 @@ process.on('uncaughtException', (err) => {
 });
 
 
-//============================//
-//          ELECTRON          //
-//============================//
+//===========================//
+//        START SERVER       //
+//===========================//
 
-if (Electron.app) {
-	Electron.app.whenReady().then(async () => {
-		// Start the server
-		let port = 8001 + Math.floor(Math.random() * 999);
-		await new Promise(resolve => {
-			srv.listen(port, () => {
-				console.log(`App server listening on port ${port}`)
-				resolve();
-			});
-		});
-		// Open the window
-		const window = new Electron.BrowserWindow({
-			width: 1100,
-			height: 720,
-			autoHideMenuBar: true,
-			minWidth: 320,
-			minHeight: 200
-		});
-		window.loadURL(`http://localhost:${port}`);
-		// Quit the app when all windows are closed
-		// unless we're on macOS
-		Electron.app.on('window-all-closed', () => {
-			if (process.platform !== 'darwin') Electron.app.quit();
-		});
-	});
-} else {
-	srv.listen(config.port, () => console.log(`Standalone server listening on http://localhost:${config.port}`));
-}
+srv.listen(config.port, () => console.log(`Standalone server listening on http://localhost:${config.port}`));

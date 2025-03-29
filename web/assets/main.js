@@ -1,6 +1,5 @@
 const elProgressBar = $('#progressBar');
 const elStatusBar = $('#statusBar');
-const isElectron = window && window.process && window.process.type;
 /** 
  * The hostname of the API
  * @type {string}

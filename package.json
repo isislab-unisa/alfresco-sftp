@@ -1,59 +1,31 @@
 {
-  "name": "sftp-browser",
+  "name": "alfresco-sftp",
   "version": "1.0.0",
-  "description": "A web-based SFTP file browser that makes managing your server files easy!",
+  "description": "A web-based SFTP file browser that makes managing your server files easy! A fork of https://github.com/CyberGen49/sftp-browser",
   "main": "server.js",
   "scripts": {
-    "startserver": "node server.js",
-    "startapp": "electron app.js",
-    "package": "electron-builder -lw"
-  },
-  "build": {
-    "appId": "org.simplecyber.sftp-browser",
-    "productName": "SFTP-Browser",
-    "files": [
-      "web/**/*",
-      "*.js",
-      "*.json"
-    ],
-    "linux": {
-      "target": [
-        "deb"
-      ],
-      "category": "Network",
-      "icon": "web/icon.png"
-    },
-    "win": {
-      "target": [
-        "zip"
-      ],
-      "icon": "web/icon.png"
-    }
+    "startserver": "node server.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/CyberGen49/sftp-browser.git"
+    "url": "git+https://github.com/isislab-unisa/alfresco-sftp.git"
   },
-  "author": "Kayla <kayla@cybah.me> (https://cybah.me)",
-  "license": "ISC",
+  "author": "Alfredo Spera <alfredo.j.spera@gmail.com>",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/CyberGen49/sftp-browser/issues"
+    "url": "https://github.com/isislab-unisa/alfresco-sftp/issues"
   },
-  "homepage": "https://github.com/CyberGen49/sftp-browser#readme",
+  "homepage": "https://github.com/isislab-unisa/alfresco-sftp#readme",
   "dependencies": {
     "archiver": "^6.0.1",
     "body-parser": "^1.20.2",
     "cyber-express-logger": "^1.0.5",
     "dayjs": "^1.11.10",
-    "electron-squirrel-startup": "^1.0.0",
     "express": "^4.18.2",
     "express-async-handler": "^1.2.0",
     "express-ws": "^5.0.2",
     "mime": "^3.0.0",
     "ssh2-sftp-client": "^9.1.0",
     "web-resources": "^2.3.0"
-  },
-  "devDependencies": {
-    "electron": "^26.2.4"
   }
 }
