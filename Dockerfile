@@ -6,6 +6,8 @@ FROM node:22.14.0-alpine
 # Use production node environment by default.
 ENV NODE_ENV=production
 
+# TODO: Add .env for encryption key
+
 WORKDIR /usr/src/app
 
 # Download dependencies as a separate step to take advantage of Docker's caching.
