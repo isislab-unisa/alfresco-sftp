@@ -19,6 +19,39 @@ dayjs.extend(dayjsAdvancedFormat);
 const utils = require('web-resources');
 const config = require('./config.json');
 
+// Encryption
+/** Algorithm used during encryption */
+const algorithm = 'aes-256-cbc';
+/** Secret key used for the encryption (32 bytes) */
+const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY;
+/** Initialization vector lenght (16 bytes) */
+const IV = process.env.IV;
+
+/**
+ * Encrypt a string.
+ * @param {string} text - The text to encrypt
+ * @returns {string} - The encrypted text.
+ */
+function encrypt(text) {
+	const cipher = crypto.createCipheriv(algorithm, Buffer.from(ENCRYPTION_KEY), IV);
+	let encrypted = cipher.update(text, 'utf8', 'hex');
+	encrypted += cipher.final('hex');
+	return encrypted;
+}
+
+/**
+ * Decrypt an encripted string.
+ * @param {string} text - The text to decrypt
+ * @returns {string} - The decrypted text.
+ */
+function decrypt(text) {
+	const decipher = crypto.createDecipheriv(algorithm, Buffer.from(ENCRYPTION_KEY), IV);
+	let decrypted = decipher.update(text, 'hex', 'utf8');
+	decrypted += decipher.final('utf8');
+	return decrypted;
+}
+  
+
 /** Generates a SHA-256 hash for a given object. */
 const getObjectHash = (obj) => {
 	const hash = crypto.createHash('sha256');
@@ -80,13 +113,13 @@ class Credentials {
 		 * @type {string | undefined}
 		 * @default undefined
 		 */
-		this.password = password || undefined;
+		this.password = password ? encrypt(password) : undefined;
 		/**
 		 * The private key for the SFTP server (can be empty if using a password)
 		 * @type {string | undefined}
 		 * @default undefined
 		 */
-		this.privateKey = privateKey || undefined;
+		this.privateKey = privateKey ? encrypt(privateKey) : undefined;
 	}
 
 	/**
@@ -493,7 +526,7 @@ const initApi = asyncHandler(async (req, res, next) => {
 // Get the number of credentials present in the server
 srv.get('/api/sftp/credentials', async (req, res) => {
 	const length = Object.keys(sftpConnections.getAllCredentials()).length;
-	res.json({ success: true, numOfCredentials: length });
+	res.json({ success: true, numOfCredentials: length, credentials: sftpConnections.getAllCredentials() });
 });
 
 // Get the number of sessions present in the server
@@ -508,7 +541,14 @@ srv.get('/api/sftp/credentials/:key', async (req, res) => {
 	const connection = sftpConnections.getConnection(key);
 
 	if (connection) {
-		res.json({ success: true, key: connection.key, credentials: connection.credentials });
+		let credentials = {... connection.credentials};
+		
+		if (credentials.password)
+			credentials.password = decrypt(credentials.password)
+		if (credentials.privateKey)
+			credentials.privateKey = decrypt(credentials.privateKey)
+
+		res.json({ success: true, key: connection.key, credentials: credentials });
 	} else {
 		res.status(404).json("Not found");
 	}
@@ -534,7 +574,6 @@ srv.post('/api/sftp/credentials/create', rawBodyParser, async (req, res) => {
 			data.password,
 			data.privateKey
 		);
-
 		const key = crypto.randomUUID();
 		const connection = sftpConnections.addNewConnection(key, credentials);
 		res.json({ success: true, connection_uuid: connection.key });
