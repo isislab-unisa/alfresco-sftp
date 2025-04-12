@@ -526,7 +526,7 @@ const initApi = asyncHandler(async (req, res, next) => {
 // Get the number of credentials present in the server
 srv.get('/api/sftp/credentials', async (req, res) => {
 	const length = Object.keys(sftpConnections.getAllCredentials()).length;
-	res.json({ success: true, numOfCredentials: length, credentials: sftpConnections.getAllCredentials() });
+	res.json({ success: true, numOfCredentials: length/*, credentials: sftpConnections.getAllCredentials()*/ });
 });
 
 // Get the number of sessions present in the server
