@@ -40,7 +40,6 @@ const IV = process.env.IV
  * @returns {string} - The encrypted text.
  */
 function encrypt(text) {
-	console.log("Encryption test to remove after this commit!")
 	const cipher = crypto.createCipheriv(algorithm, Buffer.from(ENCRYPTION_KEY), IV);
 	let encrypted = cipher.update(text, 'utf8', 'hex');
 	encrypted += cipher.final('hex');
