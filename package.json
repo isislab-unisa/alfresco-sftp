@@ -4,7 +4,8 @@
   "description": "A web-based SFTP file browser that makes managing your server files easy! A fork of https://github.com/CyberGen49/sftp-browser",
   "main": "server.js",
   "scripts": {
-    "startserver": "node --env-file=.env server.js"
+    "startserverenv": "node --env-file=.env server.js",
+    "startserver": "node server.js"
   },
   "repository": {
     "type": "git",

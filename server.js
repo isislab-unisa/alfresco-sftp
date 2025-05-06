@@ -22,10 +22,17 @@ const config = require('./config.json');
 // Encryption
 /** Algorithm used during encryption */
 const algorithm = 'aes-256-cbc';
+
+// Note: crypto.randomBytes produces a 32 bytes and 16 bytes string
+// when passing the arguments 24 and 10 respectively 
+
 /** Secret key used for the encryption (32 bytes) */
-const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY;
+const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY 
+					|| crypto.randomBytes(24).toString('base64');
+
 /** Initialization vector lenght (16 bytes) */
-const IV = process.env.IV;
+const IV = process.env.IV 
+					|| crypto.randomBytes(10).toString('base64');
 
 /**
  * Encrypt a string.
@@ -33,6 +40,7 @@ const IV = process.env.IV;
  * @returns {string} - The encrypted text.
  */
 function encrypt(text) {
+	console.log("Encryption test to remove after this commit!")
 	const cipher = crypto.createCipheriv(algorithm, Buffer.from(ENCRYPTION_KEY), IV);
 	let encrypted = cipher.update(text, 'utf8', 'hex');
 	encrypted += cipher.final('hex');
