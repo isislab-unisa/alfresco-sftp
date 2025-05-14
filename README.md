@@ -35,12 +35,12 @@ This project is part of a modular architecture called **VM Lab**. Find out more 
 
 ## Documentation
 
-Full documentation and guides are available in the [Wiki](https://github.com/isislab-unisa/vm-lab/wiki).
+Full documentation and guides are available in the [Wiki](https://github.com/isislab-unisa/alfresco-sftp/wiki).
 
 
 ## Contributing
 
-- See [Contributing-To-The-Wiki](https://github.com/isislab-unisa/vm-lab/wiki/Contributing-To-The-Wiki) for documentation standards and contribution guidelines.
+- See [Contributing-To-The-Wiki](https://github.com/isislab-unisa/alfresco-sftp/wiki/Contributing-To-The-Wiki) for documentation standards and contribution guidelines.
 - Issues and feature requests are welcome!
 
 ## License
