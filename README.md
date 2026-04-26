@@ -31,7 +31,7 @@
 This project is part of a modular architecture called **VM Lab**. Find out more about it [here](https://github.com/isislab-unisa/vm-lab/wiki/The-External-Modules).
 
 - [VM Lab](https://github.com/isislab-unisa/vm-lab)
-- [SFTP Module](https://github.com/isislab-unisa/alfresco-sftp)
+- [SSH Module](https://github.com/isislab-unisa/alfresco-ssh)
 
 ## Documentation
 
